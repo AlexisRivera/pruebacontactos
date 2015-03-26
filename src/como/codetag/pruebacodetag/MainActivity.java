@@ -18,6 +18,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,7 +27,7 @@ public class MainActivity extends Activity {
 	private DatabaseHandler baseDatos;
 	private ImagenAdapter cursorAdapter;
 	private ListView listViewPersonas;
-	private Button botonAgregarPersona;
+	private ImageButton botonAgregarPersona;
 	
 	// Constantes privadas.
 	private int CODIGO_RESULT_EDITAR_PERSONA = 0;
@@ -39,7 +40,7 @@ public class MainActivity extends Activity {
 		
 		// Hace referencia a la parte xml (activity_main.xml).
 		listViewPersonas = (ListView) findViewById(R.id.listViewContacts);
-		botonAgregarPersona = (Button)findViewById(R.id.btnAddContact);
+		botonAgregarPersona = (ImageButton)findViewById(R.id.btnAddContact);
 		
 
 		/**

@@ -3,6 +3,7 @@ package como.codetag.pruebacodetag;
 import java.io.File;
 
 import com.codetag.pruebacodetag.basedatos.DatabaseHandler;
+import com.codetag.pruebacodetag.gps.ControlGPS;
 import com.codetag.pruebacodetag.modelos.Contact;
 import com.codetag.pruebacodetag.utilis.Mensaje;
 
@@ -16,6 +17,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,8 +37,10 @@ public class EditarContactActivity extends Activity {
 	private Button botonImagenPersona;
 	private ImageView imagenPersona;
 	private Mensaje mensaje;
-
-	// Variables.
+	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+	private Uri fileUri;
+	private int TAKE_PICTURE = 100;
+	static final int REQUEST_IMAGE_CAPTURE = 100;
 	private String ruta_imagen; // La ruta de la imagen que el usuario eligio
 								// para la imagen de su persona.
 	private int SELECCIONAR_IMAGEN = 237487;
@@ -58,7 +62,7 @@ public class EditarContactActivity extends Activity {
 		editTextEdad = (EditText) findViewById(R.id.editTextAddres);
 		botonImagenPersona = (Button) findViewById(R.id.botonAgregarImagenPersona);
 		imagenPersona = (ImageView) findViewById(R.id.imagenPersona);
-
+		
 		// Se crea el objeto mensaje.
 		mensaje = new Mensaje(getApplicationContext());
 
@@ -128,6 +132,9 @@ public class EditarContactActivity extends Activity {
 				limpiarCampos();
 			}
 		});
+		
+		ControlGPS gps=new ControlGPS(EditarContactActivity.this();
+		
 	}
 
 	/**
@@ -239,7 +246,7 @@ public class EditarContactActivity extends Activity {
 	 */
 	private void ventanaImagen() {
 		try {
-			final CharSequence[] items = { "Seleccionar de la galería" };
+			final CharSequence[] items = { "Seleccionar galeria", "Camara" };
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Seleccionar una foto");
@@ -251,6 +258,9 @@ public class EditarContactActivity extends Activity {
 							intentSeleccionarImagen.setType("image/*");
 							startActivityForResult(intentSeleccionarImagen, SELECCIONAR_IMAGEN);
 							break;
+						case 1:
+						     startActivityForResult(new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE), TAKE_PICTURE);
+						     break;
 						}
 				}
 			});
@@ -265,7 +275,14 @@ public class EditarContactActivity extends Activity {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
-		try {
+		 if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+				Uri selectedImage = data.getData();
+			 Bundle extras = data.getExtras();
+		        Bitmap imageBitmap = (Bitmap) extras.get("data");
+		        imagenPersona.setImageBitmap(imageBitmap);
+		    	imagenPersona.setImageURI(selectedImage);
+		    
+		 }
 			if (requestCode == SELECCIONAR_IMAGEN) {
 				if (resultCode == Activity.RESULT_OK) {
 					Uri selectedImage = data.getData();
@@ -286,9 +303,7 @@ public class EditarContactActivity extends Activity {
 					}
 				}
 			}
-		} catch (Exception e) {
-		}
-
+		
 	}
 
 	private Bitmap getBitmap(String ruta_imagen) {

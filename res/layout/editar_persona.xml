@@ -27,7 +27,7 @@
                 android:text="@string/agregarImagenPersona" />
 			<EditText
 			    android:id="@+id/editTextNombre"
-			    android:layout_width="245dp"
+			    android:layout_width="fill_parent"
 			    android:layout_height="wrap_content"
 			    android:layout_x="28dp"
 			    android:layout_y="149dp"
@@ -36,7 +36,7 @@
 			    android:textSize="18sp" />
 			<EditText
 			    android:id="@+id/editTextPhone"
-			    android:layout_width="243dp"
+			    android:layout_width="fill_parent"
 			    android:layout_height="wrap_content"
 			    android:layout_x="29dp"
 			    android:layout_y="282dp"
@@ -45,7 +45,7 @@
 			    android:textSize="18sp" />
 			<EditText
 			    android:id="@+id/editTextAddres"
-			    android:layout_width="244dp"
+			    android:layout_width="fill_parent"
 			    android:layout_height="wrap_content"
 			    android:layout_x="36dp"
 			    android:layout_y="349dp"
